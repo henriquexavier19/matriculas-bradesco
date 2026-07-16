@@ -3,11 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <title>Sistema de Consulta</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: white;
+        }
+        .barra-superior {
+            background-color: #13303F;
+            color: white;
+            padding: 30px;
+        }
+        .barra-superior h1 {
+            margin: 0;
+            font-size: 22px;
+        }
+        .conteudo {
+            padding: 40px;
+        }
+        .conteudo h2 {
+            font-weight: normal;
+            color: #333;
+            margin-bottom: 25px;
+        }
+        .grade-opcoes {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .cartao-opcao {
+            display: block;
+            text-decoration: none;
+            background-color: #13303F;
+            color: white;
+            border-radius: 12px;
+            padding: 25px 30px;
+            min-width: 220px;
+            transition: opacity 0.2s;
+        }
+        .cartao-opcao:hover {
+            opacity: 0.85;
+        }
+        .cartao-opcao .titulo {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+        .cartao-opcao .descricao {
+            font-size: 13px;
+            color: #cbd5db;
+        }
+        .cartao-opcao.desabilitado {
+            background-color: #e8ebed;
+            color: #8a8f94;
+            cursor: default;
+            pointer-events: none;
+        }
+        .cartao-opcao.desabilitado .descricao {
+            color: #a0a5aa;
+        }
+    </style>
 </head>
 <body>
-    <h1>Sistema de Consulta</h1>
-    <ul>
-      <li><a href="/rede-credenciada-bradesco-TC">Consultar rede credenciada</a></li>
-    </ul>
+    <div class="barra-superior">
+        <h1>INNOVEX MANAGEMENT</h1>
+    </div>
+
+    <div class="conteudo">
+        <h2>Selecione uma opção:</h2>
+
+        <div class="grade-opcoes">
+            <a href="/rede-credenciada-bradesco-TC" class="cartao-opcao">
+                <div class="titulo">Consultar Rede Credenciada</div>
+                <div class="descricao">Verificar especialidades habilitadas por rede</div>
+            </a>
+
+            <div class="cartao-opcao desabilitado">
+                <div class="titulo">Consultar Matrícula</div>
+                <div class="descricao">Em breve</div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
