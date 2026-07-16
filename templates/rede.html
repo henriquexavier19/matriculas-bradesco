@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Consulta de Rede</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: white;
+        }
+        .barra-superior {
+            background-color: #13303F;
+            color: white;
+            padding: 30px;
+        }
+        .barra-superior h1 {
+            margin: 0;
+            font-size: 22px;
+        }
+        .conteudo {
+            padding: 30px;
+        }
+        .conteudo h2 {
+            font-weight: normal;
+            margin-bottom: 15px;
+        }
+        .linha-busca {
+            display: flex;
+            gap: 10px;
+        }
+        .linha-busca input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        .linha-busca button {
+            background-color: #13303F;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .cartao-rede {
+            background-color: #F5F7FA;
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th {
+            text-align: left;
+            color: #888;
+            font-size: 12px;
+            padding: 8px 15px;
+        }
+        th:last-child, td:last-child {
+            text-align: right;
+        }
+        td {
+            background-color: #FAFAFA;
+            padding: 12px 15px;
+        }
+        tr td:first-child { border-radius: 8px 0 0 8px; }
+        tr td:last-child { border-radius: 0 8px 8px 0; }
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .badge-sim {
+            background-color: #E6F4EA;
+            color: #1E8E3E;
+        }
+        .badge-nao {
+            background-color: #FCE8E6;
+            color: #D93025;
+        }
+        .aviso-nao-encontrada {
+            color: #D93025;
+            margin-top: 20px;
+        }
+        a.voltar {
+            display: inline-block;
+            margin-top: 20px;
+            color: #13303F;
+        }
+    </style>
+</head>
+<body>
+    <div class="barra-superior">
+        <h1>INNOVEX MANAGEMENT</h1>
+    </div>
+
+    <div class="conteudo">
+        <h2>Consultar rede</h2>
+
+        <form method="POST" class="linha-busca">
+            <input type="text" name="nome_rede" placeholder="Digite o nome da rede" required>
+            <button type="submit">Consultar</button>
+        </form>
+
+        {% if dados %}
+            {% if not dados.encontrada %}
+                <p class="aviso-nao-encontrada">Rede '{{ dados.nome_rede }}': NÃO HABILITADO para atender.</p>
+            {% else %}
+                <div class="cartao-rede">Rede: {{ dados.nome_rede }}</div>
+
+                <table>
+                    <tr>
+                        <th>ESPECIALIDADE</th>
+                        <th>STATUS</th>
+                    </tr>
+                    {% for especialidade in dados.especialidades %}
+                    <tr>
+                        <td>{{ especialidade.nome }}</td>
+                        <td>
+                            {% if especialidade.habilitada %}
+                                <span class="badge badge-sim">✓ Habilitada</span>
+                            {% else %}
+                                <span class="badge badge-nao">✕ Não habilitada</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
+        {% endif %}
+
+        <p><a href="/" class="voltar">Voltar</a></p>
+    </div>
+</body>
+</html>
