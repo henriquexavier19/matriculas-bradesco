@@ -112,7 +112,7 @@
            <input type="text" name="nome_rede" placeholder="Digite o nome da rede" list="lista-redes" required>
             <datalist id="lista-redes">
                 {% for rede in redes %}
-                <option valeu=""{{ rede }}">
+                <option value="{{ rede }}">
                     {% endfor %}
                 </datalist>
             <button type="submit">Consultar</button>
