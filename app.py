@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from consulta_rede import buscar_rede_dados
+from consulta_rede import buscar_rede_dados, listar_redes
 
 app = Flask(__name__)
 
@@ -13,7 +13,8 @@ def rede():
     if request.method == "POST":
         nome_rede = request.form.get("nome_rede", "")
         dados = buscar_rede_dados(nome_rede)
-    return render_template("rede.html", dados=dados)
+    redes_disponiveis = listar_redes()
+    return render_template("rede.html", dados=dados, redes=redes_disponiveis)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True, use_reloader=False)

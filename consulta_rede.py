@@ -37,3 +37,9 @@ def buscar_rede_dados(nome_rede: str, caminho_planilha: str = "workbook_v1.xlsx"
         especialidades.append({"nome": linha["Especialidade"], "habilitada": habilitada})
 
     return {"encontrada": True, "nome_rede": nome_rede, "especialidades": especialidades}
+
+
+def listar_redes(caminho_planilha: str = "workbook_v1.xlsx") -> list:
+    df = pd.read_excel(caminho_planilha)
+    nomes = df["Nome da Rede"].astype(str).str.strip().unique()
+    return sorted(nomes)
