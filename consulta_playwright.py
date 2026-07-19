@@ -23,7 +23,7 @@ def consultar_matricula_no_portal(numero_matricula: str) -> dict:
             navegador = p.chromium.launch(headless=True)
         else:
             navegador = p.chromium.launch(channel="chrome", headless=False)
-        pagina = navegador.new_page()
+        pagina = navegador.new_page(viewport={"width": 1366, "height": 768})
 
         print("Abrindo o site...")
         pagina.goto("https://wwws.bradescosaude.com.br/PCBS-GerenciadorPortal/td/loginReferenciado.do")
@@ -44,10 +44,17 @@ def consultar_matricula_no_portal(numero_matricula: str) -> dict:
         pagina.wait_for_load_state("networkidle")
 
         print("Abrindo o campo de busca de matrícula...")
-        pagina.evaluate("document.getElementById('sitBenefArea').style.display = 'block'")
-
         print("Preenchendo o número da matrícula na busca...")
-        pagina.fill("#numCartao", numero_matricula)
+        for _ in range(10):
+            pagina.evaluate("var el = document.getElementById('sitBenefArea'); if (el) { el.style.display = 'block'; }")
+            try:
+                pagina.fill("#numCartao", numero_matricula, timeout=2000)
+                break
+            except Exception:
+                pagina.wait_for_timeout(1000)
+        else:
+            raise Exception("Não foi possível abrir o campo de busca de matrícula.")
+
         pagina.click("#search_input")
 
         print("Aguardando resultado da busca...")
