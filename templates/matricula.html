@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Consulta de Matrícula</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: white;
+        }
+        .barra-superior {
+            background-color: #13303F;
+            color: white;
+            padding: 30px;
+        }
+        .barra-superior h1 {
+            margin: 0;
+            font-size: 22px;
+        }
+        .conteudo {
+            padding: 30px;
+            max-width: 600px;
+        }
+        .conteudo h2 {
+            font-weight: normal;
+            margin-bottom: 15px;
+        }
+        .bloco {
+            background-color: #F5F7FA;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        .bloco h3 {
+            margin-top: 0;
+            font-size: 14px;
+        }
+        .bloco input[type="text"],
+        .bloco input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .bloco button {
+            background-color: #13303F;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .cartao-resultado {
+            background-color: #F5F7FA;
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin-top: 20px;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+        .aviso-nao-encontrada {
+            color: #D93025;
+            margin-top: 20px;
+        }
+        a.voltar {
+            display: inline-block;
+            margin-top: 20px;
+            color: #13303F;
+        }
+    </style>
+</head>
+<body>
+    <div class="barra-superior">
+        <h1>INNOVEX MANAGEMENT</h1>
+    </div>
+
+    <div class="conteudo">
+        <h2>Consultar matrícula</h2>
+
+        <form method="POST" enctype="multipart/form-data" class="bloco">
+            <h3>Opção 1: Enviar PDF</h3>
+            <input type="file" name="arquivo_pdf" accept="application/pdf">
+            <button type="submit">Enviar PDF</button>
+        </form>
+
+        <form method="POST" class="bloco">
+            <h3>Opção 2: Digitar o número</h3>
+            <input type="text" name="numero_matricula" placeholder="Digite o número da matrícula">
+            <button type="submit">Consultar</button>
+        </form>
+
+        {% if dados %}
+            {% if dados.encontrada %}
+                <div class="cartao-resultado">
+                    <strong>Beneficiário:</strong> {{ dados.nome }}<br>
+                    <strong>Matrícula:</strong> {{ dados.numero }}<br>
+                    <strong>Situação:</strong> {{ dados.situacao }}
+                </div>
+            {% else %}
+                <p class="aviso-nao-encontrada">Não foi possível encontrar a matrícula.</p>
+            {% endif %}
+        {% elif dados is none and request.method == "POST" %}
+            <p class="aviso-nao-encontrada">Não foi possível encontrar a matrícula.</p>
+        {% endif %}
+
+        <p><a href="/" class="voltar">Voltar</a></p>
+    </div>
+</body>
+</html>
